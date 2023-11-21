@@ -1,0 +1,15 @@
+- hosts: localhost
+
+  roles:
+    - name: openldap
+      tag:
+        - openldap
+        - docker
+    - name: traefik
+      tag:
+        - traefik
+        - docker
+    - name: whoami
+      tag:
+        - whoami
+        - docker

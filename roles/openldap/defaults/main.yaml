@@ -1,0 +1,4 @@
+openldap_home: "/tmp/openldap"
+openldap_admin_username: "admin"
+openldap_admin_password: "admin"
+openldap_root: "dc=ansible,dc=fr"
