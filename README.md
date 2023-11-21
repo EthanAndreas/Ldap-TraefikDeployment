@@ -1,10 +1,21 @@
-# LadpServver
+# LdapServer
 
 ## Usage
+
+- Install ansible and requirements
 ```bash
 pip install ansible
 pip install -r requirements.txt
+```
+Do not use docker apt package, use the one from python
+
+- Add user to docker group
+```bash
 sudo usermod -aG docker $USER
 exec su -l $USER
+```
+
+- Run playbook
+```bash
 ansible-playbook -i inventory.yaml playbook_tpl.yaml
 ```
