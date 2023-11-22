@@ -16,21 +16,33 @@
   wait_for:
     port: 1389
 
+- name: LDIF base file creation
+  template:
+    src: base.ldif.j2
+    dest: "{{ openldap_home }}/base.ldif"
+
+- name: Verify base entry
+  command: ldapsearch -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -x -w {{ openldap_admin_password }} -b '{{ openldap_root }}'
+  register: base_entry_check
+  ignore_errors: true
+
+- name: Define base entry if not exists
+  command: ldapadd -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -x -w {{ openldap_admin_password }} -f {{ openldap_home }}/base.ldif
+  when: base_entry_check.rc != 0
+
 - name: Is running ?
   command: ldapvi -h {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -b '{{ openldap_root }}'
 
-- name: LDIF file creation
+- name: LDIF user file creation
   template:
     src: file.ldif.j2
     dest: "{{ openldap_home }}/file.ldif"
 
-- name: User import
-  command: ldapadd -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -x -w {{ openldap_admin_password }} -f {{ openldap_home }}/file.ldif
-# - name: Check if entry exists
-#   command: ldapsearch -x -LLL -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -w admin -b '{{ entry_dn }}' 'objectclass=*'
-#   register: ldap_search_result
-#   ignore_errors: true
+- name: Check if entries exist
+  command: ldapsearch -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -w {{ openldap_admin_password }} -b '{{ openldap_root }}' -s base '(objectClass=*)'
+  register: entries_check
+  ignore_errors: true
 
-# - name: Add entry if it doesn't exist
-#   command: ldapadd -H ldap://localhost:1389 -D 'cn=admin,dc=ansible,dc=fr' -w admin -f /tmp/openldap/file.ldif
-#   when: ldap_search_result.rc != 0
+- name: Add entries if not exist
+  command: ldapadd -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -x -w {{ openldap_admin_password }} -f {{ openldap_home }}/file.ldif
+  when: entries_check.rc != 0
