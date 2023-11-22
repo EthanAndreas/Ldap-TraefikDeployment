@@ -1,0 +1,36 @@
+- name: Init service
+  file:
+    path: "{{ openldap_home }}"
+    state: directory
+
+- name: Docker-compose file creation
+  template:
+    src: docker-compose.yaml.j2
+    dest: "{{ openldap_home }}/docker-compose.yaml"
+
+- name: Start service
+  community.docker.docker_compose:
+    project_src: "{{ openldap_home }}"
+
+- name: Wait for starting
+  wait_for:
+    port: 1389
+
+- name: Is running ?
+  command: ldapvi -h {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -b '{{ openldap_root }}'
+
+- name: LDIF file creation
+  template:
+    src: file.ldif.j2
+    dest: "{{ openldap_home }}/file.ldif"
+
+- name: User import
+  command: ldapadd -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -x -w {{ openldap_admin_password }} -f {{ openldap_home }}/file.ldif
+# - name: Check if entry exists
+#   command: ldapsearch -x -LLL -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -w admin -b '{{ entry_dn }}' 'objectclass=*'
+#   register: ldap_search_result
+#   ignore_errors: true
+
+# - name: Add entry if it doesn't exist
+#   command: ldapadd -H ldap://localhost:1389 -D 'cn=admin,dc=ansible,dc=fr' -w admin -f /tmp/openldap/file.ldif
+#   when: ldap_search_result.rc != 0

@@ -15,6 +15,11 @@ sudo usermod -aG docker $USER
 exec su -l $USER
 ```
 
+- Install ldap
+```bash
+sudo apt install ldap-utils
+```
+
 - Run playbook
 ```bash
 ansible-playbook -i inventory.yaml playbook_tpl.yaml

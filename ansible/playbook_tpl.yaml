@@ -1,5 +1,8 @@
 - hosts: localhost
 
+  vars:
+    openldap_server: "ldap://localhost:1389"
+
   roles:
     - name: openldap
       tag:
