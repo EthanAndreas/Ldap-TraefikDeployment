@@ -4,6 +4,20 @@ all:
       ansible_connection: local
       ansible_python_interpreter: /usr/bin/python3
 
-  vars:
-    group_name: test
-    user_to_add: "{{ ansible_user }}"
+whoami_group:
+  hosts:
+    localhost:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3
+
+apache_group:
+  hosts:
+    localhost:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3
+
+nginx_group:
+  hosts:
+    localhost:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3

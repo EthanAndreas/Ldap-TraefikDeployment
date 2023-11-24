@@ -20,6 +20,11 @@ exec su -l $USER
 sudo apt install ldap-utils
 ```
 
+- Install apache2
+```bash
+sudo apt install apache2
+```
+
 - Run playbook
 ```bash
 ansible-playbook -i inventory.yaml playbook_tpl.yaml

@@ -16,3 +16,32 @@
       tag:
         - whoami
         - docker
+
+- hosts: whoami_group
+  roles:
+    - name: whoami
+      tag:
+        - whoami
+        - docker
+      vars:
+        domain: "whoami.localhost"
+
+- hosts: apache_group
+  roles:
+    - name: apache
+      tag:
+        - apache
+        - docker
+      vars:
+        domain: "my-site.localhost"
+        path: "/front"
+
+- hosts: nginx_group
+  roles:
+    - name: nginx
+      tag:
+        - nginx
+        - docker
+      vars:
+        domain: "my-site.localhost"
+        path: "/api"

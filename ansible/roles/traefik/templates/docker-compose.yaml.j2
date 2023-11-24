@@ -13,8 +13,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - traefik
+      - traefik_net
 
 networks:
-  traefik:
+  traefik_net:
     driver: bridge

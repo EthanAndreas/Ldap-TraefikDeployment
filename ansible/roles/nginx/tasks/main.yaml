@@ -1,13 +1,13 @@
 - name: Init service
   ansible.builtin.file:
-    path: "{{ whoami_home }}"
+    path: "{{ nginx_home }}"
     state: directory
 
 - name: Docker-compose file creation
   ansible.builtin.template:
     src: docker-compose.yaml.j2
-    dest: "{{ whoami_home }}/docker-compose.yaml"
+    dest: "{{ nginx_home }}/docker-compose.yaml"
 
 - name: Start service
   community.docker.docker_compose:
-    project_src: "{{ whoami_home }}"
+    project_src: "{{ nginx_home }}"
