@@ -4,9 +4,9 @@ services:
   nginx:
     image: nginx:latest
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nginx.rule=Host(`my-site.localhost`) && Path(`/api`)"
-      - "traefik.http.routers.nginx.entrypoints=http"
+      - traefik.enable=true
+      - traefik.http.routers.nginx.rule=Host(`my-site.localhost`) && Path(`/api`)
+      - traefik.http.routers.nginx.entrypoints=web
     networks:
       - traefik_net
 

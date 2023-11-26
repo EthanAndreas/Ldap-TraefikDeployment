@@ -21,6 +21,12 @@
     src: base.ldif.j2
     dest: "{{ openldap_home }}/base.ldif"
 
+- name: Check if LDAP is available
+  wait_for:
+    host: localhost
+    port: 1389
+    state: started
+
 - name: Verify base entry
   command: ldapsearch -H {{ openldap_server }} -D 'cn={{ openldap_admin_username }},{{ openldap_root }}' -x -w {{ openldap_admin_password }} -b '{{ openldap_root }}'
   register: base_entry_check

@@ -4,9 +4,9 @@ services:
   apache:
     image: httpd:latest
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.apache.rule=Host(`my-site.localhost`) && Path(`/front`)"
-      - "traefik.http.routers.apache.entrypoints=http"
+      - traefik.enable=true
+      - traefik.http.routers.apache.rule=Host(`my-site.localhost`) && Path(`/front`)
+      - traefik.http.routers.apache.entrypoints=web
     networks:
       - traefik_net
 

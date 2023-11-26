@@ -27,5 +27,7 @@ sudo apt install apache2
 
 - Run playbook
 ```bash
-ansible-playbook -i inventory.yaml playbook_tpl.yaml
+sh start.sh
 ```
+
+## Remark

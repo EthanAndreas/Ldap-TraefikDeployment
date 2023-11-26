@@ -10,11 +10,11 @@ services:
       - LDAP_ADMIN_PASSWORD={{ openldap_admin_password }}
       - LDAP_ROOT={{ openldap_root }}
     networks:
-      - ldap
+      - net
     volumes:
       - 'openldap_data:/bitnami/openldap'
 volumes:
   openldap_data:
 
 networks:
-  ldap:
+  net:

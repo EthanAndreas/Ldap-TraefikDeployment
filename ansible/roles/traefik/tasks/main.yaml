@@ -3,11 +3,6 @@
     path: "{{ traefik_home }}"
     state: directory
 
-- name: Configuration file creation
-  template:
-    src: traefik-config.yaml.j2
-    dest: "{{ traefik_home }}/traefik-config.yaml"
-
 - name: Docker-compose file creation
   template:
     src: docker-compose.yaml.j2
